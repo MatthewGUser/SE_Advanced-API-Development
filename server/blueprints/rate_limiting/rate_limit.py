@@ -9,7 +9,10 @@ limiter = Limiter(
     default_limits=["200 per day", "50 per hour"]
 )
 
-@rate_limit_bp.route('/limited-route')
+@rate_limit_bp.route('/rate-limited-endpoint', methods=['GET'])
 @limiter.limit("5 per minute")
-def limited_route():
-    return jsonify({'message': 'This is a rate-limited response'})
+def rate_limited_test():
+    return jsonify({
+        'message': 'This is a rate-limited endpoint',
+        'status': 'success'
+    })
