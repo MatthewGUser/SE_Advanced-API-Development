@@ -14,6 +14,8 @@ This project is a Flask-based API that includes features such as rate limiting, 
 
 ```
 flask-api-project
+├── instance
+├── migrations
 ├── server
 │   ├── blueprints
 │   │   ├── auth
@@ -66,57 +68,68 @@ flask-api-project
 ## Setup Instructions
 
 1. Clone the repository:
-
-   ```
+   ```bash
    git clone https://github.com/MatthewGUser/SE_Advanced-API-Development.git
-   cd flask-api-project
+   cd SE_Advanced-API-Development
    ```
-
 2. Create a virtual environment:
 
-   ```
-   python -m venv venv
-   ```
+```
+python -m venv venv
+```
 
 3. Activate the virtual environment:
 
-   - On Windows:
-     ```
-     venv\Scripts\activate
-     ```
-   - On macOS/Linux:
-     ```
-     source venv/bin/activate
-     ```
+- On Windows:
+
+```
+venv\Scripts\activate
+```
+
+- On macOS/Linux:
+
+```
+source venv/bin/activate
+```
 
 4. Install the required packages:
 
-   ```
-   pip install -r requirements.txt
-   ```
+```
+pip install -r requirements.txt
+```
 
-5. Set up environment variables in the `.env` file.
+5. Set up environment variables in `.env`
+6. Initialize the database:
 
-6. Run the application:
-   ```
-   python run.py
-   ```
+```
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+```
+
+7. Run the application (choose one):
+
+- Using Python directly:
+
+```
+python run.py
+```
+
+- Using Flask CLI:
+
+```
+flask run
+```
+
+8. Test API using Postman collection provided in root directory.
+
+- Be sure to create a customer before logging in.
 
 ## Usage
 
 - Access the API at `http://localhost:5000`.
 - Use the `/login` route to obtain a token for authentication.
 - Explore the inventory management routes for CRUD operations.
-
-## Testing
-
-# ! FINISH LATER |
-
-Run the tests using:
-
-```
-pytest
-```
 
 ## License
 
