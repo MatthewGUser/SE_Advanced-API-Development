@@ -22,7 +22,6 @@ flask-api-project
 │   │   │   └── tokens.py
 │   │   ├── cache
 │   │   │   ├── __init__.py
-│   │   │   ├── cache.py
 │   │   │   └── routes.py
 │   │   ├── inventory
 │   │   │   ├── __init__.py
