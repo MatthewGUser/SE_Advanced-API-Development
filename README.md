@@ -98,7 +98,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-5. Set up environment variables in `.env`
+5. Set up environment variables in `.env`.
 6. Initialize the database:
 
 ```
