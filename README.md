@@ -14,39 +14,54 @@ This project is a Flask-based API that includes features such as rate limiting, 
 
 ```
 flask-api-project
-├── app
+├── server
+│   ├── blueprints
+│   │   ├── auth
+│   │   │   ├── __init__.py
+│   │   │   ├── routes.py
+│   │   │   └── tokens.py
+│   │   ├── cache
+│   │   │   ├── __init__.py
+│   │   │   ├── cache.py
+│   │   │   └── routes.py
+│   │   ├── inventory
+│   │   │   ├── __init__.py
+│   │   │   └── routes.py
+│   │   ├── mechanic
+│   │   │   ├── __init__.py
+│   │   │   └── routes.py
+│   │   ├── queries
+│   │   │   ├── __init__.py
+│   │   │   └── advanced_queries.py
+│   │   ├── rate_limiting
+│   │   │   ├── __init__.py
+│   │   │   └── rate_limit.py
+│   │   ├── service_ticket
+│   │   │   ├── __init__.py
+│   │   │   └── routes.py
+│   │   ├── __init__.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── customer.py
+│   │   ├── inventory.py
+│   │   ├── mechanic.py
+│   │   ├── service_ticket.py
 │   ├── __init__.py
-│   ├── auth
-│   │   ├── __init__.py
-│   │   ├── routes.py
-│   │   └── tokens.py
-│   ├── cache
-│   │   ├── __init__.py
-│   │   └── cache.py
-│   ├── inventory
-│   │   ├── __init__.py
-│   │   └── routes.py
-│   ├── queries
-│   │   ├── __init__.py
-│   │   └── advanced_queries.py
-│   ├── rate_limiting
-│   │   ├── __init__.py
-│   │   └── rate_limit.py
-│   ├── models.py
-│   ├── routes.py
-│   └── utils.py
+│   ├── config.py
+│   ├── db.py
 ├── tests
 │   ├── __init__.py
 │   ├── test_auth.py
 │   ├── test_cache.py
 │   ├── test_inventory.py
 │   ├── test_queries.py
-│   └── test_rate_limiting.py
+│   ├── test_rate_limiting.py
+│   ├── test_service_ticket.py
 ├── .env
 ├── .gitignore
-├── config.py
+├── README.md
 ├── requirements.txt
-└── README.md
+└── run.py
 ```
 
 ## Setup Instructions
