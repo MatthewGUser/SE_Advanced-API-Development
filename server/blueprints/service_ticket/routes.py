@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from server.models.service_ticket import ServiceTicket
 from server.models.inventory import Inventory
+from server.models.mechanic import Mechanic
 from server.db import db
 from server.blueprints.auth.tokens import token_required
 
