@@ -1,10 +1,9 @@
 from flask import Blueprint, jsonify
-from .cache import cache
+from . import cache  # Import cache from __init__.py
 
 cache_bp = Blueprint('cache', __name__)
 
 @cache_bp.route('/cached-route')
-@cache.cached(timeout=60)  # Cache this route for 60 seconds
+@cache.cached(timeout=60)
 def cached_route():
-    data = {"message": "This is a cached response"}
-    return jsonify(data)
+    return jsonify({'message': 'This is a cached response'})

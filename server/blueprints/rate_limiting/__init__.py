@@ -1,7 +1,5 @@
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+from flask import Blueprint
 
-limiter = Limiter(key_func=get_remote_address)
+rate_limit_bp = Blueprint('rate_limit', __name__)
 
-def init_rate_limiting(app):
-    limiter.init_app(app)
+from . import rate_limit

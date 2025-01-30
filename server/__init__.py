@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from .db import db, ma
-from .blueprints.cache.cache import init_cache
+from .blueprints.cache import init_cache  # Import init_cache from cache blueprint
 from .config import config_by_name
 
 def create_app(config_name=None):
