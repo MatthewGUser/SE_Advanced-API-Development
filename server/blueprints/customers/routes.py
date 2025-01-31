@@ -67,19 +67,11 @@ def create_customer():
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
     
-@customers_bp.route('/customers', methods=['DELETE'])
-def delete_customer():
+@customers_bp.route('/customers/<int:customer_id>', methods=['DELETE'])
+def delete_customer(customer_id):
     try:
-        data = request.get_json()
+        customer = Customer.query.get_or_404(customer_id)
         
-        if 'email' not in data:
-            return jsonify({'error': 'Missing required field: email'}), 400
-
-        customer = Customer.query.filter_by(email=data['email']).first()
-
-        if not customer:
-            return jsonify({'error': 'Customer not found'}), 404
-
         try:
             db.session.delete(customer)
             db.session.commit()
@@ -87,7 +79,7 @@ def delete_customer():
             db.session.rollback()
             raise
         
-        return jsonify({'message': f'Customer with email {data["email"]} deleted successfully'}), 200
+        return jsonify({'message': f'Customer with ID {customer_id} deleted successfully'}), 200
 
     except Exception as e:
         db.session.rollback()

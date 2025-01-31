@@ -1,10 +1,11 @@
 from flask_caching import Cache
-from flask import Blueprint
 
-cache = Cache()
-cache_bp = Blueprint('cache', __name__)
+cache = Cache(config={
+    'CACHE_TYPE': 'simple',
+    'CACHE_DEFAULT_TIMEOUT': 300
+})
 
 def init_cache(app):
-    cache.init_app(app, config={'CACHE_TYPE': 'simple'})
+    cache.init_app(app)
 
 from . import routes

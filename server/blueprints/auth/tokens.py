@@ -5,6 +5,7 @@ from flask import request, jsonify, current_app
 from server.models.customer import Customer
 
 def encode_token(customer_id):
+    """Generate JWT token for customer"""
     payload = {
         'exp': datetime.utcnow() + timedelta(days=1),
         'iat': datetime.utcnow(),
@@ -13,6 +14,7 @@ def encode_token(customer_id):
     return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256')
 
 def decode_token(token):
+    """Decode and validate JWT token"""
     try:
         payload = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
         return payload['sub']
@@ -25,16 +27,26 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1]
+        
+        if 'X-Access-Token' in request.headers:
+            token = request.headers['X-Access-Token']
+        elif 'Authorization' in request.headers:
+            auth = request.headers['Authorization']
+            token = auth.split(' ')[1] if ' ' in auth else auth
+            
         if not token:
             return jsonify({'message': 'Token is missing!'}), 401
+            
         try:
             customer_id = decode_token(token)
-            current_customer = Customer.query.filter_by(id=customer_id).first()
+            current_customer = Customer.query.get(customer_id)
+            
             if not current_customer:
-                return jsonify({'message': 'Token is invalid!'}), 401
+                return jsonify({'message': 'Invalid token'}), 401
+                
+            return f(current_customer.id, *args, **kwargs)
+            
         except Exception as e:
-            return jsonify({'message': str(e)}), 401
-        return f(current_customer.id, *args, **kwargs)
+            return jsonify({'message': 'Token validation failed'}), 401
+            
     return decorated

@@ -60,6 +60,7 @@ flask-api-project
 │   ├── test_service_ticket.py
 ├── .env
 ├── .gitignore
+├── advanced-api-development.postman_collection.json
 ├── README.md
 ├── requirements.txt
 └── run.py

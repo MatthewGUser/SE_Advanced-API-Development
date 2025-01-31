@@ -13,21 +13,29 @@ def get_mechanics():
 
 @mechanic_bp.route('/mechanics/top', methods=['GET'])
 def get_top_mechanics():
-    top_mechanics = db.session.query(
-        Mechanic,
-        func.count(ServiceTicket.id).label('ticket_count')
-    ).join(
-        ServiceTicket.mechanics
-    ).group_by(
-        Mechanic.id
-    ).order_by(
-        func.count(ServiceTicket.id).desc()
-    ).all()
-    
-    return jsonify([{
-        **mechanic.to_dict(),
-        'ticket_count': count
-    } for mechanic, count in top_mechanics])
+    try:
+        # Query top mechanics including those with no tickets
+        top_mechanics = db.session.query(
+            Mechanic,
+            func.count(ServiceTicket.id).label('ticket_count')
+        ).outerjoin(
+            ServiceTicket.mechanics
+        ).group_by(
+            Mechanic.id
+        ).order_by(
+            func.count(ServiceTicket.id).desc()
+        ).limit(5).all()
+        
+        # Format response
+        response = [{
+            'id': mechanic.id,
+            'name': mechanic.name,
+            'ticket_count': count
+        } for mechanic, count in top_mechanics]
+        
+        return jsonify(response)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @mechanic_bp.route('/mechanics', methods=['POST'])
 def create_mechanic():
@@ -36,3 +44,22 @@ def create_mechanic():
     db.session.add(mechanic)
     db.session.commit()
     return jsonify(mechanic.to_dict()), 201
+
+
+@mechanic_bp.route('/mechanics/<int:mechanic_id>', methods=['DELETE'])
+def delete_mechanic(mechanic_id):
+    try:
+        mechanic = Mechanic.query.get_or_404(mechanic_id)
+        
+        try:
+            db.session.delete(mechanic)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise
+        
+        return jsonify({'message': f'Mechanic with ID {mechanic_id} deleted successfully'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500

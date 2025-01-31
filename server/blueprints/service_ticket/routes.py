@@ -11,27 +11,87 @@ service_ticket_bp = Blueprint('service_ticket', __name__)
 @service_ticket_bp.route('/my-tickets', methods=['GET'])
 @token_required
 def get_my_tickets(customer_id):
-    tickets = ServiceTicket.query.filter_by(customer_id=customer_id).all()
-    return jsonify([ticket.to_dict() for ticket in tickets])
+    try:
+        # Verify customer_id from token
+        if not customer_id:
+            return jsonify({'error': 'Not authenticated'}), 401
+            
+        # Get only tickets for this customer
+        tickets = ServiceTicket.query.filter_by(customer_id=customer_id).all()
+        
+        return jsonify({
+            'tickets': [ticket.to_dict() for ticket in tickets],
+            'count': len(tickets),
+            'customer_id': customer_id
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-# Service ticket routes
 @service_ticket_bp.route('/service_tickets/<int:ticket_id>', methods=['GET'])
 def get_ticket(ticket_id):
-    ticket = ServiceTicket.query.get_or_404(ticket_id)
-    return jsonify(ticket.to_dict())
+    try:
+        # Get specific ticket by ID
+        ticket = ServiceTicket.query.get_or_404(ticket_id)
+        return jsonify(ticket.to_dict())
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @service_ticket_bp.route('/service_tickets', methods=['POST'])
 @token_required
 def create_ticket(customer_id):
-    data = request.get_json()
-    ticket = ServiceTicket(
-        description=data['description'],
-        customer_id=customer_id,
-        status='pending'
-    )
-    db.session.add(ticket)
-    db.session.commit()
-    return jsonify(ticket.to_dict()), 201
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        if 'description' not in data:
+            return jsonify({'error': 'Description is required'}), 400
+            
+        # Create ticket
+        ticket = ServiceTicket(
+            description=data['description'],
+            customer_id=customer_id
+        )
+        
+        # Add mechanics if provided
+        if 'mechanic_ids' in data:
+            mechanics = Mechanic.query.filter(Mechanic.id.in_(data['mechanic_ids'])).all()
+            ticket.mechanics = mechanics
+            
+        db.session.add(ticket)
+        db.session.commit()
+        
+        return jsonify(ticket.to_dict()), 201
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+    
+@service_ticket_bp.route('/service_tickets/<int:ticket_id>/add-part', methods=['POST'])
+@token_required
+def add_part_to_ticket(customer_id, ticket_id):
+    try:
+        data = request.get_json()
+        
+        if 'part_id' not in data:
+            return jsonify({'error': 'Missing part_id field'}), 400
+            
+        # Get ticket and verify ownership
+        ticket = ServiceTicket.query.get_or_404(ticket_id)
+        if ticket.customer_id != customer_id:
+            return jsonify({'error': 'Not authorized to modify this ticket'}), 403
+            
+        # Get part
+        part = Inventory.query.get_or_404(data['part_id'])
+        
+        # Add part to ticket
+        ticket.parts.append(part)
+        db.session.commit()
+        
+        return jsonify(ticket.to_dict()), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
 @service_ticket_bp.route('/service_tickets/<int:ticket_id>/edit', methods=['PUT'])
 @token_required
@@ -74,14 +134,3 @@ def delete_ticket(customer_id, ticket_id):
     db.session.commit()
     return '', 204
 
-@service_ticket_bp.route('/service_tickets/<int:ticket_id>/add-part', methods=['POST'])
-@token_required
-def add_part(customer_id, ticket_id):
-    data = request.get_json()
-    ticket = ServiceTicket.query.get_or_404(ticket_id)
-    if ticket.customer_id != customer_id:
-        return jsonify({'message': 'Unauthorized'}), 403
-    part = Inventory.query.get_or_404(data['part_id'])
-    ticket.parts.append(part)
-    db.session.commit()
-    return jsonify(ticket.to_dict())
