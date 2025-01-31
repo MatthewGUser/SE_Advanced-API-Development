@@ -126,12 +126,6 @@ flask run
 
 - Be sure to create a customer before logging in.
 
-## Usage
-
-- Access the API at `http://localhost:5000`.
-- Use the `/login` route to obtain a token for authentication.
-- Explore the inventory management routes for CRUD operations.
-
 ## License
 
 This project is licensed under the MIT License.
