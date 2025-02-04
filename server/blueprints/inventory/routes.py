@@ -4,7 +4,7 @@ from server.db import db
 
 inventory_bp = Blueprint('inventory', __name__)
 
-@inventory_bp.route('/inventory', methods=['GET'])
+@inventory_bp.route('', methods=['GET'])
 def get_all_inventory():
     try:
         inventory = Inventory.query.all()
@@ -12,7 +12,7 @@ def get_all_inventory():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@inventory_bp.route('/inventory/<int:inventory_id>', methods=['GET'])
+@inventory_bp.route('/<int:inventory_id>', methods=['GET'])
 def get_inventory_item(inventory_id):
     try:
         item = Inventory.query.get_or_404(inventory_id)
@@ -20,7 +20,7 @@ def get_inventory_item(inventory_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@inventory_bp.route('/inventory', methods=['POST'])
+@inventory_bp.route('', methods=['POST'])
 def add_inventory_item():
     try:
         data = request.get_json()
@@ -40,7 +40,7 @@ def add_inventory_item():
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
-@inventory_bp.route('/inventory/<int:inventory_id>', methods=['PUT'])
+@inventory_bp.route('/<int:inventory_id>', methods=['PUT'])
 def update_inventory_item(inventory_id):
     try:
         item = Inventory.query.get_or_404(inventory_id)
@@ -57,7 +57,7 @@ def update_inventory_item(inventory_id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
-@inventory_bp.route('/inventory/<int:inventory_id>', methods=['DELETE'])
+@inventory_bp.route('/<int:inventory_id>', methods=['DELETE'])
 def delete_inventory_item(inventory_id):
     try:
         item = Inventory.query.get_or_404(inventory_id)

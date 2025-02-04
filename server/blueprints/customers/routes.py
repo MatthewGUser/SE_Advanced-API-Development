@@ -4,7 +4,7 @@ from server.models import Customer
 
 customers_bp = Blueprint('customers', __name__)
 
-@customers_bp.route('/customers', methods=['GET'])
+@customers_bp.route('', methods=['GET'])
 def get_customers():
     try:
         page = request.args.get('page', 1, type=int)
@@ -25,7 +25,7 @@ def get_customers():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@customers_bp.route('/customers/<int:customer_id>', methods=['GET'])
+@customers_bp.route('/<int:customer_id>', methods=['GET'])
 def get_customer(customer_id):
     try:
         customer = Customer.query.get(customer_id)
@@ -37,7 +37,7 @@ def get_customer(customer_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@customers_bp.route('/customers', methods=['POST'])
+@customers_bp.route('', methods=['POST'])
 def create_customer():
     try:
         data = request.get_json()
@@ -67,7 +67,7 @@ def create_customer():
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
     
-@customers_bp.route('/customers/<int:customer_id>', methods=['DELETE'])
+@customers_bp.route('/<int:customer_id>', methods=['DELETE'])
 def delete_customer(customer_id):
     try:
         customer = Customer.query.get_or_404(customer_id)
