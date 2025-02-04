@@ -40,16 +40,16 @@ flask-api-project
 │   │   ├── service_ticket
 │   │   │   ├── __init__.py
 │   │   │   └── routes.py
-│   │   ├── __init__.py
+│   │   └── __init__.py
 │   ├── models
 │   │   ├── __init__.py
 │   │   ├── customer.py
 │   │   ├── inventory.py
 │   │   ├── mechanic.py
-│   │   ├── service_ticket.py
+│   │   └── service_ticket.py
 │   ├── __init__.py
 │   ├── config.py
-│   ├── db.py
+│   └── db.py
 ├── tests
 │   ├── __init__.py
 │   ├── test_auth.py
@@ -57,7 +57,7 @@ flask-api-project
 │   ├── test_inventory.py
 │   ├── test_queries.py
 │   ├── test_rate_limiting.py
-│   ├── test_service_ticket.py
+│   └── test_service_ticket.py
 ├── .env
 ├── .gitignore
 ├── advanced-api-development.postman_collection.json
