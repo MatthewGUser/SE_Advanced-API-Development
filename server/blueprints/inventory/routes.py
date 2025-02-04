@@ -1,6 +1,16 @@
 from flask import Blueprint, request, jsonify
-from server.models.inventory import Inventory
-from server.db import db
+from ...models.inventory import Inventory
+from ...db import db, ma
+
+# Create Schema
+class InventorySchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Inventory
+        load_instance = True
+        include_fk = True
+
+inventory_schema = InventorySchema()
+inventories_schema = InventorySchema(many=True)
 
 inventory_bp = Blueprint('inventory', __name__)
 
@@ -8,7 +18,7 @@ inventory_bp = Blueprint('inventory', __name__)
 def get_all_inventory():
     try:
         inventory = Inventory.query.all()
-        return jsonify([item.to_dict() for item in inventory])
+        return inventories_schema.dump(inventory)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -16,7 +26,7 @@ def get_all_inventory():
 def get_inventory_item(inventory_id):
     try:
         item = Inventory.query.get_or_404(inventory_id)
-        return jsonify(item.to_dict())
+        return inventory_schema.dump(item)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -24,18 +34,10 @@ def get_inventory_item(inventory_id):
 def add_inventory_item():
     try:
         data = request.get_json()
-        
-        # Validate required fields
-        if not all(k in data for k in ['name', 'price']):
-            return jsonify({'error': 'Missing required fields'}), 400
-            
-        item = Inventory(
-            name=data['name'],
-            price=data['price']
-        )
+        item = inventory_schema.load(data)
         db.session.add(item)
         db.session.commit()
-        return jsonify(item.to_dict()), 201
+        return inventory_schema.dump(item), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
@@ -45,14 +47,9 @@ def update_inventory_item(inventory_id):
     try:
         item = Inventory.query.get_or_404(inventory_id)
         data = request.get_json()
-        
-        if 'name' in data:
-            item.name = data['name']
-        if 'price' in data:
-            item.price = data['price']
-            
+        updated_item = inventory_schema.load(data, instance=item, partial=True)
         db.session.commit()
-        return jsonify(item.to_dict())
+        return inventory_schema.dump(updated_item)
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
