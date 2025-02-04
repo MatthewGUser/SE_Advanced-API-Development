@@ -32,14 +32,9 @@
 						"url": {
 							"raw": "http://localhost:5000/auth/login",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"auth",
-								"login"
-							]
+							"path": ["auth", "login"]
 						}
 					},
 					"response": []
@@ -69,13 +64,9 @@
 						"url": {
 							"raw": "http://localhost:5000/customers?page=1&limit=10",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"customers"
-							],
+							"path": ["customers"],
 							"query": [
 								{
 									"key": "page",
@@ -98,14 +89,9 @@
 						"url": {
 							"raw": "http://localhost:5000/customers/{customer_id}",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"customers",
-								"{customer_id}"
-							]
+							"path": ["customers", "{customer_id}"]
 						}
 					},
 					"response": []
@@ -133,13 +119,9 @@
 						"url": {
 							"raw": "http://localhost:5000/customers",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"customers"
-							]
+							"path": ["customers"]
 						}
 					},
 					"response": []
@@ -161,14 +143,9 @@
 						"url": {
 							"raw": "http://localhost:5000/customers/{customer_id}",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"customers",
-								"{customer_id}"
-							]
+							"path": ["customers", "{customer_id}"]
 						}
 					},
 					"response": []
@@ -186,13 +163,9 @@
 						"url": {
 							"raw": "http://localhost:5000/mechanics",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"mechanics"
-							]
+							"path": ["mechanics"]
 						}
 					},
 					"response": []
@@ -217,14 +190,9 @@
 						"url": {
 							"raw": "http://localhost:5000/mechanics/top",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"mechanics",
-								"top"
-							]
+							"path": ["mechanics", "top"]
 						}
 					},
 					"response": []
@@ -252,13 +220,9 @@
 						"url": {
 							"raw": "http://localhost:5000/mechanics",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"mechanics"
-							]
+							"path": ["mechanics"]
 						}
 					},
 					"response": []
@@ -286,14 +250,9 @@
 						"url": {
 							"raw": "http://localhost:5000/mechanics/{mechanic_id}",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"mechanics",
-								"{mechanic_id}"
-							]
+							"path": ["mechanics", "{mechanic_id}"]
 						}
 					},
 					"response": []
@@ -309,15 +268,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/my-tickets",
+							"raw": "http://localhost:5000/service_tickets/my-tickets",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"my-tickets"
-							]
+							"path": ["my-tickets"]
 						}
 					},
 					"response": []
@@ -351,13 +306,9 @@
 						"url": {
 							"raw": "http://localhost:5000/service_tickets",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"service_tickets"
-							]
+							"path": ["service_tickets"]
 						}
 					},
 					"response": []
@@ -379,15 +330,9 @@
 						"url": {
 							"raw": "http://localhost:5000/service_tickets/{ticket_id}/edit",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"service_tickets",
-								"{ticket_id}",
-								"edit"
-							]
+							"path": ["service_tickets", "{ticket_id}", "edit"]
 						}
 					},
 					"response": []
@@ -409,15 +354,9 @@
 						"url": {
 							"raw": "http://localhost:5000/service_tickets/{ticket_id}/status",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"service_tickets",
-								"{ticket_id}",
-								"status"
-							]
+							"path": ["service_tickets", "{ticket_id}", "status"]
 						}
 					},
 					"response": []
@@ -430,14 +369,9 @@
 						"url": {
 							"raw": "http://localhost:5000/service_tickets/{ticket_id}",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"service_tickets",
-								"{ticket_id}"
-							]
+							"path": ["service_tickets", "{ticket_id}"]
 						}
 					},
 					"response": []
@@ -455,13 +389,9 @@
 						"url": {
 							"raw": "http://localhost:5000/inventory",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"inventory"
-							]
+							"path": ["inventory"]
 						}
 					},
 					"response": []
@@ -489,14 +419,9 @@
 						"url": {
 							"raw": "http://localhost:5000/inventory/",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"inventory",
-								""
-							]
+							"path": ["inventory", ""]
 						}
 					},
 					"response": []
@@ -518,15 +443,9 @@
 						"url": {
 							"raw": "http://localhost:5000/service_tickets/{ticket_id}/add-part",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"service_tickets",
-								"{ticket_id}",
-								"add-part"
-							]
+							"path": ["service_tickets", "{ticket_id}", "add-part"]
 						}
 					},
 					"response": []
@@ -548,14 +467,9 @@
 						"url": {
 							"raw": "http://localhost:5000/inventory/{inventory_id}",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"inventory",
-								"{inventory_id}"
-							]
+							"path": ["inventory", "{inventory_id}"]
 						}
 					},
 					"response": []
@@ -568,14 +482,9 @@
 						"url": {
 							"raw": "http://localhost:5000/inventory/{inventory_id}",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"inventory",
-								"{inventory_id}"
-							]
+							"path": ["inventory", "{inventory_id}"]
 						}
 					},
 					"response": []
@@ -593,13 +502,9 @@
 						"url": {
 							"raw": "http://localhost:5000/rate-limited-endpoint",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"rate-limited-endpoint"
-							]
+							"path": ["rate-limited-endpoint"]
 						}
 					},
 					"response": []
@@ -612,13 +517,9 @@
 						"url": {
 							"raw": "http://localhost:5000/cached-endpoint",
 							"protocol": "http",
-							"host": [
-								"localhost"
-							],
+							"host": ["localhost"],
 							"port": "5000",
-							"path": [
-								"cached-endpoint"
-							]
+							"path": ["cached-endpoint"]
 						}
 					},
 					"response": []
